@@ -20,18 +20,21 @@ The traffic flows from the user directly to the GPU instance serving the model i
 
 ```mermaid
 graph TD
-    User([User / Client]) -->|POST /predict| IP[Public IP]
-    IP -->|Port 8000| VM[AWS EC2 (g4dn.xlarge)]
-    subgraph VM_Environment [Virtual Machine Environment]
+    User[User / Client] -->|POST /predict| PublicIP[Public IP]
+    PublicIP -->|Port 8000| EC2[AWS EC2 g4dn.xlarge]
+
+    subgraph EC2["EC2 VM Environment"]
         Docker[Docker Engine]
-        subgraph Container [AI Inference Container]
+        subgraph Container["AI Inference Container"]
             API[FastAPI App]
-            Model[TinyLlama / Dummy Model]
+            Model[TinyLlama or Dummy Model]
         end
-        Docker --> Container
+        Docker --> API
     end
+
     API --> Model
     Model --> API
+
 ```
 
 *See `architecture/diagram.mermaid` for editable source.*
@@ -121,3 +124,4 @@ This project proves:
 - **Reproducibility**: `terraform apply` works the same way every time.
 - **Production Mindset**: Security groups are explicit, secrets (keys) are managed (locally), and state is tracked.
 - **DevOps competency**: Integrating Terraform (Infra) + Ansible (Config) + Docker (App).
+
