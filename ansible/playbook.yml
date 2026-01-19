@@ -1,0 +1,80 @@
+---
+- name: Provision AI Inference Server
+  hosts: localhost
+  connection: local
+  become: true
+  vars:
+    app_dir: "/opt/ai-inference-app"
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install required system packages
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - python3-pip
+          - git
+        state: present
+
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+    - name: Install Docker
+      apt:
+        name: docker-ce
+        state: present
+
+    - name: Ensure Docker service is running
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    # NVIDIA Driver installation (Simplified for T4/AWS mainly)
+    # In a real scenario, we might use a pre-baked AMI (Deep Learning AMI) to avoid this complexity and reboot time.
+    # We will assume a Deep Learning AMI or standard Ubuntu with drivers for this "One Command" demo speed, 
+    # but here is the logic if we were to install it.
+    - name: Create app directory
+      file:
+        path: "{{ app_dir }}"
+        state: directory
+        mode: '0755'
+
+    - name: Copy app files (Simulating git clone or file transfer)
+      copy:
+        src: "{{ playbook_dir }}/../app/"
+        dest: "{{ app_dir }}/"
+        # In a real remote execution, we would sync files or clone a repo.
+        # Since we run this via user-data which might clone the repo, this assumes files are present.
+    
+    - name: Build Docker image
+      docker_image:
+        name: ai-inference-server
+        build:
+          path: "{{ app_dir }}"
+          source: build
+        source: build
+
+    - name: Run Inference Container
+      docker_container:
+        name: inference-api
+        image: ai-inference-server
+        state: started
+        ports:
+          - "80:8000"
+        restart_policy: always
+        # gpus: all # Requires nvidia-container-toolkit

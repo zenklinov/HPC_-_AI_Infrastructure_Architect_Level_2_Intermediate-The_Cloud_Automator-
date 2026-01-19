@@ -1,0 +1,18 @@
+graph TD
+    User([User / Client]) -->|POST /predict| IP[Public IP / Internet gateway]
+    IP -->|Port 8000| VM[AWS EC2 Instance (g4dn.xlarge)]
+    subgraph VM_Environment [Virtual Machine Environment]
+        Driver[Nvidia Drivers]
+        Docker[Docker Engine]
+        subgraph Container [Docker Container]
+            API[FastAPI Service]
+            Model[AI Inference Logic]
+        end
+        Docker --> Container
+    end
+    API -->|Inference Request| Model
+    Model -->|Prediction| API
+    API -->|JSON Response| User
+
+    style VM stroke:#f96,stroke-width:2px
+    style Container fill:#e1f5fe,stroke:#01579b
