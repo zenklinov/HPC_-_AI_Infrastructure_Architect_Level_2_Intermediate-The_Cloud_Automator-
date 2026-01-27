@@ -11,7 +11,7 @@
 
 > **Level 2 - Intermediate (The Cloud Automator)**
 
-**Status**: Production Ready ✅ | **IaC**: Terraform 100% | **Cost**: ~$0.53/hr
+**Status**: Production Ready | **IaC**: Terraform 100% | **Cost**: ~$0.53/hr
 
 ## Concept
 A Senior Cloud Architect doesn't "click ops". This project demonstrates a fully automated **Infrastructure as Code (IaC)** pipeline to provision a GPU-enabled AI Inference Server from scratch.
@@ -134,5 +134,6 @@ This project proves:
 - **Reproducibility**: `terraform apply` works the same way every time.
 - **Production Mindset**: Security groups are explicit, secrets (keys) are managed (locally), and state is tracked.
 - **DevOps competency**: Integrating Terraform (Infra) + Ansible (Config) + Docker (App).
+
 
 
