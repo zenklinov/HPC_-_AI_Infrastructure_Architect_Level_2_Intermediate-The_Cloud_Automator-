@@ -1,9 +1,19 @@
 # Terraform-Provisioned AI Inference Server
+
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Terraform](https://img.shields.io/badge/terraform-IaC-623CE4?logo=terraform&logoColor=white)
+![AWS](https://img.shields.io/badge/AWS-EC2-orange?logo=amazonaws&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-enabled-0db7ed?logo=docker&logoColor=white)
+![NVIDIA](https://img.shields.io/badge/NVIDIA-T4%20GPU-green?logo=nvidia)
+![FastAPI](https://img.shields.io/badge/FastAPI-async-009688?logo=fastapi)
+![Status](https://img.shields.io/badge/status-production--ready-success)
+
+
 > **Level 2 - Intermediate (The Cloud Automator)**
 
 **Status**: Production Ready ✅ | **IaC**: Terraform 100% | **Cost**: ~$0.53/hr
 
-## 🚀 Concept
+## Concept
 A Senior Cloud Architect doesn't "click ops". This project demonstrates a fully automated **Infrastructure as Code (IaC)** pipeline to provision a GPU-enabled AI Inference Server from scratch.
 
 By running a single command `terraform apply`, we spin up:
@@ -14,7 +24,7 @@ By running a single command `terraform apply`, we spin up:
 
 ---
 
-## 🏗️ Architecture
+##  Architecture
 
 The traffic flows from the user directly to the GPU instance serving the model inside a Docker container.
 
@@ -41,7 +51,7 @@ graph TD
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 | Component | Technology | Role |
 |-----------|------------|------|
 | **Provisioning** | **Terraform** | VPC, EC2, Security Groups, Key Pairs |
@@ -52,7 +62,7 @@ graph TD
 
 ---
 
-## ⚡ Quick Start
+## Quick Start
 
 ### Prerequisites
 - [Terraform](https://developer.hashicorp.com/terraform/install) installed.
@@ -88,7 +98,7 @@ graph TD
 
 ---
 
-## 💰 Cost Analysis (Critical)
+## Cost Analysis (Critical)
 
 **Region**: `us-east-1` (N. Virginia)
 **Instance**: `g4dn.xlarge` (4 vCPUs, 16 GiB RAM, 1x NVIDIA T4 GPU)
@@ -106,7 +116,7 @@ graph TD
 
 ---
 
-## 🧹 Cleanup (Destroy)
+## Cleanup (Destroy)
 
 To prevent billing shock, use the provided cleanup script:
 
@@ -118,10 +128,11 @@ bash destroy.sh
 
 ---
 
-## 🏆 Value Proposition
+## Value Proposition
 This project proves:
 - **Full Automation**: No manual SSH required to set up the server.
 - **Reproducibility**: `terraform apply` works the same way every time.
 - **Production Mindset**: Security groups are explicit, secrets (keys) are managed (locally), and state is tracked.
 - **DevOps competency**: Integrating Terraform (Infra) + Ansible (Config) + Docker (App).
+
 
